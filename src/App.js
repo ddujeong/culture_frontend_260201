@@ -10,6 +10,7 @@ import PreferencesPage from './pages/PreferencesPage';
 import UserHome from './pages/UserHome';
 import LoginForm from './pages/LoginForm';
 import { UserProvider, useUser } from './context/UserContext';
+import ItemDetail from './pages/ItemDetails';
 
 function App() {
   const { user } = useUser();
@@ -23,6 +24,7 @@ function App() {
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/signup" element={<SignupForm />} />
       <Route path="/preferences" element={<PreferencesPage />} />
+      <Route path="/items/:id" element={<ItemDetail />} />
     </Routes>  
   );
 }

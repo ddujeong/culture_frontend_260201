@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/UserHome.css";
+import { useNavigate } from "react-router-dom";
 
 const categoryStyles = {
   MOVIE: { color: "#F87171", icon: "🎬" },
@@ -8,10 +9,10 @@ const categoryStyles = {
 };
 
 const RecommendationCard = ({ item, category }) => {
+    const navigate = useNavigate();
   const { color, icon } = categoryStyles[category] || { color: "#fff", icon: "" };
-console.log(item)
   return (
-    <div className="feature-card" style={{ borderColor: color }}>
+    <div className="feature-card" onClick={() => navigate(`/items/${item.itemId}`)} style={{ borderColor: color }}>
       <img
         src={item.img || "https://via.placeholder.com/300x400"}
         alt={item.title}
