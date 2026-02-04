@@ -1,0 +1,111 @@
+/* ===============================
+   Preferences Item Cards
+================================ */
+.category-card {
+  background-color: var(--bg-card);
+  padding: 24px;
+  border-radius: 14px;
+  min-width: 280px;
+  max-width: 320px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-card h2 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* 아이템 카드 그리드 */
+.items-grid {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* 단일 아이템 카드 */
+.item-card {
+  width: 120px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.25s ease;
+  text-align: center;
+  background-color: var(--bg-main);
+}
+
+.item-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.item-card-title {
+  font-size: 0.9rem;
+  margin-top: 6px;
+  color: var(--text-main);
+}
+
+.item-card-genre {
+  font-size: 0.75rem;
+  color: var(--text-sub);
+}
+
+/* 선택된 카드 */
+.item-card.selected {
+  border-color: var(--point);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+}
+
+/* Hover 효과 */
+.item-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.25);
+}
+
+/* ===============================
+   Submit Button
+================================ */
+.submit-btn {
+  margin-top: 40px;
+  padding: 14px 36px;
+  border-radius: 999px;
+  background-color: var(--point);
+  color: #0F172A;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+}
+
+/* ===============================
+   Responsive
+================================ */
+@media (max-width: 768px) {
+  .category-card {
+    min-width: 220px;
+    padding: 20px;
+  }
+
+  .item-card {
+    width: 100px;
+  }
+
+  .preferences-page h1 {
+    font-size: 2rem;
+  }
+
+  .preferences-page p {
+    font-size: 1rem;
+  }
+}
