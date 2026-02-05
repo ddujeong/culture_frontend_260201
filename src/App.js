@@ -11,10 +11,13 @@ import UserHome from './pages/UserHome';
 import LoginForm from './pages/LoginForm';
 import { UserProvider, useUser } from './context/UserContext';
 import ItemDetail from './pages/ItemDetails';
+import Header from './components/Header';
 
 function App() {
   const { user } = useUser();
   return (
+    <>
+    <Header />
     <Routes>
       <Route path="/" element={user ? <UserHome /> : <Home />} />
       <Route path='/home' element={<UserHome />} />
@@ -26,6 +29,7 @@ function App() {
       <Route path="/preferences" element={<PreferencesPage />} />
       <Route path="/items/:id" element={<ItemDetail />} />
     </Routes>  
+    </>
   );
 }
 
