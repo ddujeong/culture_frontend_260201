@@ -30,7 +30,7 @@
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
 }
 
 .feature-card img {
@@ -47,7 +47,7 @@
   left: 14px;
   font-size: 1rem;
   font-weight: 600;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
   max-width: 90%;
 }
 
@@ -58,7 +58,7 @@
   left: 14px;
   font-size: 0.75rem;
   color: #ddd;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
   max-width: 90%;
   transition: all 0.25s ease;
 }
@@ -67,6 +67,7 @@
   font-size: 0.85rem;
   color: #fff;
 }
+
 .card-category {
   position: absolute;
   top: 10px;
@@ -88,3 +89,33 @@
   font-weight: 600;
 }
 
+.card-reason {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: #ddd;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  max-width: 90%;
+}
+
+.feature-card:hover .card-reason {
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.reason-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: white;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.reason-text {
+  color: #d1d5db;
+  /* 연한 회색 */
+}

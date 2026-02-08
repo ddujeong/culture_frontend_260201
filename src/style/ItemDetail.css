@@ -64,7 +64,8 @@
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   text-decoration: none;
   transition: transform 0.2s;
-  background-color: rgba(229, 9, 20, 0.8); /* 조금 투명하게 */
+  background-color: rgba(229, 9, 20, 0.8);
+  /* 조금 투명하게 */
 }
 
 .ott-btn img {
@@ -126,7 +127,8 @@
 }
 
 .review-rating {
-  color: #facc15; /* 별 색 */
+  color: #facc15;
+  /* 별 색 */
   font-weight: 600;
 }
 
@@ -158,13 +160,15 @@
 
 .star-rating span {
   cursor: pointer;
-  color: #555; /* 비활성 별 */
+  color: #555;
+  /* 비활성 별 */
   transition: color 0.2s, transform 0.2s;
 }
 
 .star-rating span:hover,
 .star-rating span.active {
-  color: #facc15; /* 활성 별 – 노란색 */
+  color: #facc15;
+  /* 활성 별 – 노란색 */
   transform: scale(1.2);
 }
 
@@ -201,6 +205,47 @@
   color: #facc15;
   font-size: 1rem;
   margin-right: 6px;
+}
+
+.recommend-reason-box {
+  margin: 12px 0 18px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid #a78bfa;
+  border-radius: 8px;
+}
+
+.recommend-reason-box .reason-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.reason-badge.PREFERRED_GENRE {
+  background: #a78bfa;
+}
+
+.reason-badge.RECENT_ACTIVITY {
+  background: #60a5fa;
+}
+
+.reason-badge.HIGH_RATING {
+  background: #fbbf24;
+  color: #000;
+}
+
+.reason-badge.POPULAR {
+  background: #9ca3af;
+}
+
+.reason-message {
+  font-size: 13px;
+  color: #e5e7eb;
+  margin-top: 4px;
 }
 
 /* =========================

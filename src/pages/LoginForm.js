@@ -5,7 +5,7 @@ import api from "../api/axiosConfig";
 import { useUser } from "../context/UserContext";
 
 const LoginForm = () => {
-    const { setUser } = useUser();
+  const { login } = useUser();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -23,7 +23,7 @@ const LoginForm = () => {
       // 로그인 API 호출
       const response = await api.post("/users/login", form);
       const user = response.data; // { id, email, username ... }
-    setUser(user);
+      login(user);
       console.log("로그인 성공:", user);
 
       // 👉 일단은 userId만 넘김 (Context 붙이기 전)

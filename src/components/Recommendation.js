@@ -9,8 +9,17 @@ const categoryStyles = {
 };
 
 const RecommendationCard = ({ item, category }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  console.log(item)
   const { color, icon } = categoryStyles[category] || { color: "#fff", icon: "" };
+  const reasonStyleMap = {
+    PREFERRED_GENRE: { label: "취향 기반", color: "#A78BFA" },
+    RECENT_ACTIVITY: { label: "최근 활동", color: "#60A5FA" },
+    HIGH_RATING: { label: "평점 우수", color: "#FBBF24" },
+    POPULAR: { label: "인기", color: "#9CA3AF" },
+  };
+  const reason = reasonStyleMap[item.reasonType];
+  console.log(reason.label + " 이유")
   return (
     <div className="feature-card" onClick={() => navigate(`/items/${item.itemId}`)} style={{ borderColor: color }}>
       <img
@@ -24,10 +33,22 @@ const RecommendationCard = ({ item, category }) => {
       </div>
 
       <div className="card-score" style={{ backgroundColor: color }}>
-        ⭐ {item.score}
+        ⭐ {item.score.toFixed(1)}
       </div>
+      {reason && (
+        <div className="card-reason">
+          <span
+            className="reason-badge"
+            style={{ backgroundColor: reason.color }}
+          >
+            {reason.label}
+          </span>
+          <span className="reason-text">
+            {item.reasonMessage}
+          </span>
+        </div>
+      )}
 
-      <div className="card-reason">{item.reason}</div>
     </div>
   );
 };

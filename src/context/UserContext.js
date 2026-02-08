@@ -5,10 +5,7 @@ const UserContext = createContext(null);
 export const UserProvider = ({ children }) => {
   // const [user, setUser] = useState(null);
   // user = { id, username, email } 정도만
-const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [user, setUser] = useState(null); // 로그인 정보만
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -22,7 +19,7 @@ const [user, setUser] = useState(() => {
   };
 
   return (
-    <UserContext.Provider value={{ user,setUser ,login, logout }}>
+    <UserContext.Provider value={{ user, login, logout }}>
       {children}
     </UserContext.Provider>
   );
