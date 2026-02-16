@@ -2,11 +2,16 @@
    Color System – Option A
 ================================ */
 :root {
-  --bg-main: #0F172A;     /* 딥 네이비 */
-  --bg-card: #1E293B;     /* 카드 배경 */
-  --text-main: #E5E7EB;   /* 메인 텍스트 */
-  --text-sub: #94A3B8;    /* 서브 텍스트 */
-  --point: #38BDF8;       /* 포인트 하늘색 */
+  --bg-main: #0F172A;
+  /* 딥 네이비 */
+  --bg-card: #1E293B;
+  /* 카드 배경 */
+  --text-main: #E5E7EB;
+  /* 메인 텍스트 */
+  --text-sub: #94A3B8;
+  /* 서브 텍스트 */
+  --point: #38BDF8;
+  /* 포인트 하늘색 */
 }
 
 /* ===============================
@@ -34,12 +39,10 @@ a {
   flex-direction: column;
   justify-content: center;
   padding: 0 60px;
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 1) 0%,
-    rgba(15, 23, 42, 0.85) 60%,
-    rgba(15, 23, 42, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(15, 23, 42, 1) 0%,
+      rgba(15, 23, 42, 0.85) 60%,
+      rgba(15, 23, 42, 1) 100%);
 }
 
 .hero h1 {
@@ -151,6 +154,92 @@ a {
 .cta a:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+}
+
+/* 섹션 전체 레이아웃 */
+.home-section {
+  padding: 40px 60px;
+  /* Hero와 좌우 정렬 맞춤 */
+}
+
+.section-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+
+.section-info h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.view-all {
+  color: var(--point);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* 그리드/플렉스 컨테이너 */
+.content-grid {
+  display: grid;
+  /* 한 줄에 4~5개씩 배치 */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+/* 개별 카드 (기존 .feature-card 기반으로 확장) */
+.item-card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.item-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.item-card img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  /* 영화/책 포스터 비율 */
+  object-fit: cover;
+}
+
+/* 1. 음악 섹션 전용 그리드 (더 작게 배치) */
+.music-grid {
+  display: grid;
+  /* minmax를 150px 정도로 줄여서 한 줄에 더 많이 나오게 설정 */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+/* 2. 음악 카드 이미지 (정사각형 1:1) */
+.music-card img {
+  width: 100%;
+  aspect-ratio: 1 / 1 !important;
+  /* 강제로 정사각형 유지 */
+  object-fit: cover;
+  border-radius: 8px;
+  /* 음악은 둥글둥글한 게 예뻐요 */
+}
+
+/* 3. 텍스트 정보 정렬 */
+.item-details h4 {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  /* 음악 제목은 살짝 작게 */
+  font-weight: 600;
+}
+
+.item-details p {
+  font-size: 0.8rem;
+  color: var(--point);
+  /* 아티스트 이름은 포인트 컬러로 */
 }
 
 /* ===============================

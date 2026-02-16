@@ -10,7 +10,6 @@ const categoryStyles = {
 
 const RecommendationCard = ({ item, category }) => {
   const navigate = useNavigate();
-  console.log(item)
   const { color, icon } = categoryStyles[category] || { color: "#fff", icon: "" };
   const reasonStyleMap = {
     PREFERRED_GENRE: { label: "취향 기반", color: "#A78BFA" },
@@ -19,7 +18,6 @@ const RecommendationCard = ({ item, category }) => {
     POPULAR: { label: "인기", color: "#9CA3AF" },
   };
   const reason = reasonStyleMap[item.reasonType];
-  console.log(reason.label + " 이유")
   return (
     <div className="feature-card" onClick={() => navigate(`/items/${item.itemId}`)} style={{ borderColor: color }}>
       <img

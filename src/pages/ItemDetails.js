@@ -36,7 +36,7 @@ export default function ItemDetail() {
   // 1️⃣ 아이템 정보 fetch
   useEffect(() => {
     api.get(`/items/${id}`, { params: { userId: user?.id } })
-      .then(res => setItem(res.data))
+      .then(res => { setItem(res.data); console.log(res.data) })
       .catch(err => {
         console.error(err);
         alert("아이템 정보를 불러오지 못했습니다.");
@@ -110,7 +110,13 @@ export default function ItemDetail() {
   const stars = Array.from({ length: 5 }, (_, i) =>
     i < Math.round(item.averageRating) ? "★" : "☆"
   );
-
+  const renderStars = (rating) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <span key={i} className={i < Math.round(rating) ? "star active" : "star"}>
+        {i < Math.round(rating) ? "★" : "☆"}
+      </span>
+    ));
+  };
   return (
     <div className="item-detail-page">
       <button className="back-btn" onClick={() => navigate(-1)}>← 뒤로가기</button>
@@ -124,6 +130,38 @@ export default function ItemDetail() {
         <div className="item-detail-info">
           <h1>{item.title}</h1>
 
+          {/* 평점 표시 영역 개선 */}
+          <div className="rating-container">
+            {/* 1. 외부 서비스 평점 (가져온 데이터) */}
+            <div className="rating-box">
+              <small>TMDB 평점</small>
+              <div className="stars">
+                {/* 10점 만점인 데이터를 2로 나눠서 5점 별점으로 표시 */}
+                {renderStars(item.externalRating / 2)}
+                <span>({(item.externalRating / 2).toFixed(1)})</span>
+              </div>
+            </div>
+
+            {/* 2. 우리 서비스 유저 평균 평점 */}
+            <div className="rating-box">
+              <small>우리 유저 평균</small>
+              <div className="stars">
+                {renderStars(item.averageRating)}
+                <span>({item.averageRating.toFixed(1)})</span>
+              </div>
+            </div>
+
+            {/* 3. 내가 남긴 평점 (리뷰를 이미 썼을 경우) */}
+            {actionStatus === "REVIEWED" && (
+              <div className="rating-box my-rating">
+                <small>내 평점</small>
+                <div className="stars highlight">
+                  {/* 현재 유저가 남긴 리뷰 데이터를 찾아서 표시 */}
+                  {renderStars(reviews.find(r => r.userId === user?.id)?.rating || 0)}
+                </div>
+              </div>
+            )}
+          </div>
           {item.recommendationReason && (
             <div className="recommend-reason-box">
               <strong>✨ 추천 이유</strong>
@@ -131,34 +169,47 @@ export default function ItemDetail() {
             </div>
           )}
 
-          <p>
-            <strong>장르:</strong> {item.genre} |{" "}
-            <strong>개봉년도:</strong> {item.releaseDate?.slice(0, 4) || "정보 없음"}
-          </p>
+          <div className="item-metadata">
+            <p>
+              <strong>장르:</strong> {item.genre} |{" "}
+              <strong>{item.itemType === "STATIC" ? "발매일" : "개봉년도"}:</strong>{" "}
+              {item.releaseDate?.slice(0, 4) || "정보 없음"}
+            </p>
+            {item.itemType === "VIDEO" && (
+              <>
+                <p><strong>감독:</strong> {item.director || "정보 없음"}</p>
+                <p><strong>출연:</strong> {item.cast || "정보 없음"}</p>
+                {item.runtime > 0 && <p><strong>러닝타임:</strong> {item.runtime}분</p>}
+                {item.totalSeasons > 0 && (
+                  <p><strong>시즌 정보:</strong> 총 {item.totalSeasons}시즌 ({item.totalEpisodes}개 에피소드)</p>
+                )}
+                {item.originCountry && <p><strong>제작국가:</strong> {item.originCountry}</p>}
+              </>
+            )}
+
+            {/* 🎵 StaticContent (음악) 전용 정보 */}
+            {item.itemType === "STATIC" && (
+              <>
+                <p><strong>아티스트:</strong> {item.creator || "정보 없음"}</p>
+                <p><strong>앨범명:</strong> {item.albumName || "정보 없음"}</p>
+              </>
+            )}
+          </div>
           <p className="item-description">{item.description || "설명 없음"}</p>
 
-          <div className="rating">
-            <strong>평점:</strong> {stars.join(" ")} ({item.averageRating.toFixed(1)})
-          </div>
-
-          <div className="otts">
-            <strong>시청 가능 OTT:</strong>
-            <div className="ott-buttons">
-              {item.otts.map((ott, idx) => (
-                <a
-                  key={idx}
-                  href={ott.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ott-btn"
-                  style={{ backgroundColor: ott.color }}
-                >
-                  <img src={ott.logoUrl} alt={ott.name} />
-                  {ott.name}
-                </a>
-              ))}
+          {item.otts && item.otts.length > 0 && (
+            <div className="otts">
+              <strong>시청 가능 OTT:</strong>
+              <div className="ott-buttons">
+                {item.otts.map((ott, idx) => (
+                  <a key={idx} href={ott.url} target="_blank" rel="noopener noreferrer" className="ott-btn" style={{ backgroundColor: ott.color }}>
+                    <img src={ott.logoUrl} alt={ott.name} />
+                    {ott.name}
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* 사용자 액션 버튼 */}
           {user && (
