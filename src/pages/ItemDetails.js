@@ -177,12 +177,33 @@ export default function ItemDetail() {
             </p>
             {item.itemType === "VIDEO" && (
               <>
-                <p><strong>감독:</strong> {item.director || "정보 없음"}</p>
-                <p><strong>출연:</strong> {item.cast || "정보 없음"}</p>
+                {/* 감독 섹션 (사진 포함) */}
+                <div className="person-list-section">
+                  <strong>감독</strong>
+                  <div className="person-cards">
+                    {item.directors?.map((d, idx) => (
+                      <div key={idx} className="person-card">
+                        <img src={d.profilePath || "/default-avatar.png"} alt={d.name} />
+                        <span>{d.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 출연진 섹션 (사진 포함) */}
+                <div className="person-list-section">
+                  <strong>출연</strong>
+                  <div className="person-cards scrollable">
+                    {item.actors?.map((a, idx) => (
+                      <div key={idx} className="person-card">
+                        <img src={a.profilePath || "/default-avatar.png"} alt={a.name} />
+                        <span>{a.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
                 {item.runtime > 0 && <p><strong>러닝타임:</strong> {item.runtime}분</p>}
-                {item.totalSeasons > 0 && (
-                  <p><strong>시즌 정보:</strong> 총 {item.totalSeasons}시즌 ({item.totalEpisodes}개 에피소드)</p>
-                )}
                 {item.originCountry && <p><strong>제작국가:</strong> {item.originCountry}</p>}
               </>
             )}
@@ -195,6 +216,24 @@ export default function ItemDetail() {
               </>
             )}
           </div>
+          {/* 📺 시즌 정보 섹션 (TV 프로그램일 때만) */}
+          {item.itemType === "VIDEO" && item.seasons?.length > 0 && (
+            <div className="seasons-section">
+              <h3>시즌 정보</h3>
+              <div className="seasons-container">
+                {item.seasons.map((s, idx) => (
+                  <div key={idx} className="season-card">
+                    <img src={s.posterPath || item.img} alt={s.name} />
+                    <div className="season-info">
+                      <h4>{s.name}</h4>
+                      <p><small>{s.airDate?.slice(0, 4)} | {s.episodeCount}개 에피소드</small></p>
+                      <p className="season-overview">{s.overview?.slice(0, 80)}...</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <p className="item-description">{item.description || "설명 없음"}</p>
 
           {item.otts && item.otts.length > 0 && (

@@ -79,12 +79,11 @@ export default function PreferencesPage() {
           <div key={cat} className="category-card">
             <h2>{cat}</h2>
             <div className="items-grid">
-              {items[cat].map((item) => (
+              {(items[cat] || []).map((item) => (
                 <div
                   key={item.id}
-                  className={`item-card ${
-                    selectedItems[cat].includes(item.id) ? "selected" : ""
-                  }`}
+                  className={`item-card ${selectedItems[cat].includes(item.id) ? "selected" : ""
+                    }`}
                   onClick={() => toggleItem(cat, item.id)}
                 >
                   <img src={item.img || "https://via.placeholder.com/120x150"} alt={item.title} />
