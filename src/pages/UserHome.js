@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/axiosConfig";
-import "../style/UserHome.css"; // 경로 확인
+import "../style/UserHome.css";
 import { useUser } from "../context/UserContext";
 import RecommendationCard from "../components/Recommendation";
 
@@ -14,6 +14,7 @@ export default function UserHome() {
     book: { items: [] },
     music: { items: [] },
   });
+
   useEffect(() => {
     if (!user?.id) return;
     api
@@ -31,47 +32,52 @@ export default function UserHome() {
       .catch((err) => console.error(err));
   }, [user?.id]);
 
-  if (!user) return <p>로그인 후 추천을 확인할 수 있습니다.</p>;
+  if (!user) return <div className="user-home-error">로그인 후 추천을 확인할 수 있습니다.</div>;
 
-  // ⭐ 데이터 필터링 함수 (백엔드 카테고리/장르 기준으로 섹션 분리)
-  const getItemsByKey = (key) => {
-    return recommendations[key]?.items || [];
-  };
-  // 보여줄 섹션 정의
   const sections = [
-    { title: "🎬 영화 추천", key: "movie" },
-    { title: "📺 드라마 추천", key: "drama" },
-    { title: "🍱 예능 추천", key: "entertainment" },
-    { title: "🏮 애니 추천", key: "animation" },
-    { title: "📚 책 추천", key: "book" },
-    { title: "🎵 음악 추천", key: "music" },
+    { title: "영화", emoji: "🎬", key: "movie" },
+    { title: "드라마", emoji: "📺", key: "drama" },
+    { title: "예능", emoji: "🍱", key: "entertainment" },
+    { title: "애니메이션", emoji: "🏮", key: "animation" },
+    { title: "도서", emoji: "📚", key: "book" },
+    { title: "음악", emoji: "🎵", key: "music" },
   ];
 
   return (
     <main className="user-home">
-      <h1>오늘의 추천</h1>
+      {/* 웰컴 섹션: 유저 개인화 강조 */}
+      <header className="user-welcome">
+        <span className="user-tag">For You</span>
+        <h1><span>{user.username || '유저'}</span>님을 위한 <br />오늘의 취향 큐레이션</h1>
+      </header>
 
-      {sections.map((section) => {
-        const items = getItemsByKey(section.key);
-        // 데이터가 있는 섹션만 보여주거나, 없으면 없다고 표시
-        return (
-          <section key={`section-${section.key}`} className="features-wrapper">            <h2 className="section-title">{section.title}</h2>
-            <div className="features">
-              {items.length === 0 ? (
-                <p className="empty-text">추천 데이터가 준비 중이에요.</p>
-              ) : (
-                items.map((item) => (
-                  <RecommendationCard
-                    key={`${item.itemId || item.id}-${section.key}`}
-                    item={item}
-                    category={item.category}
-                  />
-                ))
-              )}
-            </div>
-          </section>
-        );
-      })}
+      <div className="user-home-content">
+        {sections.map((section) => {
+          const items = recommendations[section.key]?.items || [];
+          if (items.length === 0) return null; // 데이터 없는 섹션은 과감히 숨김 (깔끔함 유지)
+
+          return (
+            <section key={section.key} className="user-section">
+              <div className="section-header">
+                <h2>{section.emoji} {section.title}</h2>
+                <button className="refresh-btn">맞춤형 더보기</button>
+              </div>
+
+              {/* 가로 스크롤 형태의 피드 */}
+              <div className="recommendation-feed">
+                {items.map((item) => (
+                  <div className="card-wrapper" key={`${item.itemId || item.id}-${section.key}`}>
+                    <RecommendationCard
+                      item={item}
+                      category={item.category}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
     </main>
   );
 }

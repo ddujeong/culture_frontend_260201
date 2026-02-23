@@ -1,91 +1,233 @@
-/* Hero 배경 그대로 */
+/* 1. 기본 배경 및 히어로 섹션 */
 .signup-hero {
-  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(
-    180deg,
-    rgba(15, 23, 42, 1) 0%,
-    rgba(15, 23, 42, 0.85) 60%,
-    rgba(15, 23, 42, 1) 100%
-  );
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #0a0a0b;
+  /* 전체 다크 배경 */
   padding: 20px;
 }
-.signup-card form {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 중앙 정렬 */
-}
-/* 카드형 폼 */
+
+/* 2. 메인 카드 (회원가입/로그인 공통) */
 .signup-card {
+  background: #141417;
+  padding: 60px 50px;
+  border-radius: 24px;
+  border: 1px solid #27272a;
   width: 100%;
-  max-width: 400px;
-  padding: 40px;
-  border-radius: 20px;
-  background-color: var(--bg-card);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  /* 회원가입 기준 너비 */
   text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+/* 로그인일 때만 너비를 조금 더 슬림하게 */
+.signup-card.login-card {
+  max-width: 420px;
+  padding: 50px 40px;
 }
 
 .signup-card h1 {
-  font-size: 2.4rem;
-  margin-bottom: 16px;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #fff;
+  letter-spacing: -1px;
 }
 
 .signup-card p {
-  color: var(--text-sub);
-  margin-bottom: 32px;
-  line-height: 1.5;
+  color: #71717a;
+  margin-bottom: 40px;
+  font-size: 1rem;
 }
 
-/* 입력 필드 */
+/* 3. 입력 필드 및 버튼 스타일 */
 .input-field {
   width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 20px;
+  height: 54px;
+  background: #0d0d0f;
+  border: 1px solid #27272a;
   border-radius: 12px;
-  border: 1px solid #3b4252;
-  background-color: var(--bg-main);
-  color: var(--text-main);
+  padding: 0 20px;
+  color: #fff;
   font-size: 1rem;
-  transition: all 0.25s ease;
-  max-width: 350px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
 
 .input-field:focus {
   outline: none;
-  border-color: var(--point);
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
-/* 버튼 */
-.signup-card button {
+button[type="submit"] {
   width: 100%;
-  padding: 14px 0;
-  border-radius: 999px;
-  background-color: var(--point);
-  color: #0f172a;
-  font-weight: 600;
-  font-size: 1rem;
+  height: 54px;
+  background: #6366f1;
+  color: #fff;
   border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.25s ease;
-  max-width: 350px;
+  transition: all 0.3s ease;
+  margin-top: 10px;
 }
 
-.signup-card button:hover {
+button[type="submit"]:hover {
+  background: #4f46e5;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
 }
 
-/* 모바일 대응 */
-@media (max-width: 500px) {
+/* 4. 로그인 옵션 (아이디 저장, 자동 로그인) */
+.login-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0 15px;
+  gap: 10px;
+  padding: 0 4px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #6366f1;
+  cursor: pointer;
+}
+
+.checkbox-label:hover {
+  color: #fff;
+}
+
+/* 5. 소셜 로그인 섹션 */
+.social-divider {
+  display: flex;
+  align-items: center;
+  margin: 35px 0 25px;
+  color: #3f3f46;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.social-divider::before,
+.social-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #27272a;
+}
+
+.social-divider span {
+  padding: 0 15px;
+}
+
+.social-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 12px;
+  border: 1px solid #27272a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: #fff;
+  transition: 0.2s ease;
+}
+
+.social-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.social-btn.google:hover {
+  background: #ffffff;
+  color: #000;
+  border-color: #ffffff;
+}
+
+.social-btn.kakao {
+  background: #fee500;
+  color: #3c1e1e;
+  border: none;
+}
+
+.social-btn.kakao:hover {
+  background: #fada0a;
+}
+
+/* 6. 하단 푸터 링크 */
+.form-footer {
+  margin-top: 35px;
+  font-size: 0.9rem;
+  color: #71717a;
+}
+
+.footer-link-btn {
+  background: none;
+  border: none;
+  color: #6366f1;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 6px;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+.footer-link-btn:hover {
+  text-decoration: underline;
+  color: #818cf8;
+}
+
+/* 7. 반응형 디자인 (맥북 반분할 및 모바일) */
+@media (max-width: 768px) {
   .signup-card {
-    padding: 30px 20px;
+    padding: 40px 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-hero {
+    padding: 15px;
+  }
+
+  .signup-card {
+    padding: 40px 20px;
+    border-radius: 20px;
   }
 
   .signup-card h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
+  }
+
+  .login-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 }

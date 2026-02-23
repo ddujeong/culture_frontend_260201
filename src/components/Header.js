@@ -8,28 +8,32 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/"); // 로그아웃 후 홈으로 이동
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      logout();
+      navigate("/");
+    }
   };
-console.log(user)
+
   return (
     <header className="app-header">
       <div className="logo">
         <Link to="/">CultureApp</Link>
       </div>
+
       <nav className="nav-links">
         <Link to="/">Home</Link>
-        <Link to="/contents">Contents</Link>
+        <Link to="/list">Contents</Link>
         {user && <Link to="/mypage">MyPage</Link>}
       </nav>
+
       <div className="user-actions">
         {user ? (
           <>
-            <span>{user.email} 님</span>
-            <button onClick={handleLogout}>로그아웃</button>
+            <span className="user-info">{user.nickname || user.email.split('@')[0]} 님</span>
+            <button className="logout-btn" onClick={handleLogout}>로그아웃</button>
           </>
         ) : (
-          <Link to="/login">로그인</Link>
+          <Link to="/login" className="login-link">로그인</Link>
         )}
       </div>
     </header>

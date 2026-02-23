@@ -29,8 +29,16 @@ ChartJS.register(
   Legend
 );
 
-const categories = ["MOVIE", "BOOK", "MUSIC"];
+const categories = ["MOVIE", "DRAMA", "TV_SHOW", "ANIMATION", "BOOK", "MUSIC"];
 
+const categoryLabels = {
+  MOVIE: "영화",
+  DRAMA: "시리즈",
+  TV_SHOW: "예능",
+  ANIMATION: "애니메이션",
+  BOOK: "도서",
+  MUSIC: "음악"
+};
 const MyPage = () => {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -138,7 +146,7 @@ const MyPage = () => {
               className={selectedCategory === cat ? "active" : ""}
               onClick={() => setSelectedCategory(cat)}
             >
-              {cat}
+              {categoryLabels[cat]}
             </button>
           ))}
         </div>
@@ -213,7 +221,7 @@ const MyPage = () => {
               className={selectedReviewCategory === cat ? "active" : ""}
               onClick={() => setSelectedReviewCategory(cat)}
             >
-              {cat}
+              {categoryLabels[cat]}
             </button>
           ))}
         </div>

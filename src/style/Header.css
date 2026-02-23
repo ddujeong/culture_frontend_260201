@@ -1,0 +1,96 @@
+/* Header.css */
+
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+    background: rgba(13, 13, 15, 0.8);
+    /* 다크 배경 투명도 */
+    backdrop-filter: blur(10px);
+    /* 배경 흐림 효과 */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+/* Logo */
+.logo a {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -1px;
+    background: linear-gradient(to right, #6366f1, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    color: #a1a1aa;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #fff;
+}
+
+/* User Actions */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-actions span {
+    font-size: 0.85rem;
+    color: #71717a;
+}
+
+.user-actions button,
+.user-actions a {
+    background: #1e1e22;
+    color: #fff;
+    border: 1px solid #27272a;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.user-actions button:hover,
+.user-actions a:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        /* 모바일에서는 햄버거 메뉴 등으로 대체 고려 */
+    }
+
+    .user-actions span {
+        display: none;
+        /* 모바일에서 이메일 숨기기 */
+    }
+}

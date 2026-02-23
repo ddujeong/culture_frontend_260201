@@ -117,6 +117,8 @@ export default function ItemDetail() {
       </span>
     ));
   };
+  console.log("🛠️ Current User:", user?.id);
+  console.log("🛠️ Current actionStatus:", actionStatus);
   return (
     <div className="item-detail-page">
       <button className="back-btn" onClick={() => navigate(-1)}>← 뒤로가기</button>
@@ -249,22 +251,48 @@ export default function ItemDetail() {
               </div>
             </div>
           )}
-
           {/* 사용자 액션 버튼 */}
-          {user && (
-            <div className="action-buttons">
-              {!actionStatus && (
-                <button onClick={handleReserve} className="action-btn">🤍 찜하기</button>
-              )}
-              {actionStatus === "RESERVE" && (
-                <button onClick={handleWatched} className="action-btn">👀 시청 완료</button>
-              )}
-              {actionStatus === "WATCHED" && (
-                <button onClick={handleSubmitReview} className="action-btn">✍️ 리뷰 작성</button>
-              )}
-              {actionStatus === "REVIEWED" && <span className="done-text">✅ 리뷰 완료</span>}
-            </div>
-          )}
+          {/* 사용자 액션 버튼 섹션 */}
+          <div className="action-buttons-wrapper">
+            {user ? (
+              <>
+                {actionStatus !== "REVIEWED" ? (
+                  <div className="action-group">
+                    {/* 찜하기: 상태에 따라 active 또는 outline 클래스 부여 */}
+                    <button
+                      onClick={handleReserve}
+                      className={`action-btn ${actionStatus === "RESERVE" ? "active" : "outline"}`}
+                    >
+                      {actionStatus === "RESERVE" ? "❤️" : "🤍"}
+                    </button>
+
+                    {/* 메인 버튼: primary 클래스 공통 사용 */}
+                    {actionStatus === "WATCHED" ? (
+                      <button
+                        onClick={() => document.querySelector('.review-form')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="action-btn primary review-mode"
+                      >
+                        ✍️ 리뷰 쓰기
+                      </button>
+                    ) : (
+                      <button onClick={handleWatched} className="action-btn primary">
+                        👀 시청 완료
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="status-finished-badge">
+                    ✅ 감상 및 리뷰 완료
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="login-prompt-box">
+                로그인 후 찜하기와 리뷰 작성이 가능합니다.
+              </div>
+            )}
+
+          </div>
         </div>
       </div>
 
@@ -294,7 +322,9 @@ export default function ItemDetail() {
         <ul className="reviews-list">
           {reviews.map(r => (
             <li key={r.id} className={user && r.userId === user.id ? "my-review" : ""}>
-              <strong>{r.username}</strong> ({r.rating}/5): {r.comment}
+              <strong>{r.username}</strong>
+              <span className="rating-text">⭐ {r.rating} / 5</span>
+              <p>{r.comment}</p>
             </li>
           ))}
         </ul>

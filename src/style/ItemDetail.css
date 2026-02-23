@@ -1,270 +1,157 @@
+/* ItemDetail.css */
+* {
+  box-sizing: border-box;
+}
+
 .item-detail-page {
-  padding: 40px;
-  color: #f0f0f0;
+  padding: 120px 5% 100px;
+  background-color: #0a0a0b;
+  color: #fff;
+  min-height: 100vh;
 }
 
 .back-btn {
-  background: #38bdf8;
-  color: #0f172a;
-  padding: 8px 16px;
+  background: none;
   border: none;
-  border-radius: 999px;
+  color: #71717a;
+  font-size: 1rem;
   cursor: pointer;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
+  transition: 0.3s;
 }
 
+.back-btn:hover {
+  color: #fff;
+  transform: translateX(-5px);
+}
+
+/* Main Card Layout */
 .item-detail-card {
-  display: flex;
-  gap: 32px;
-  background-color: #1e293b;
-  padding: 24px;
-  border-radius: 14px;
+  display: grid;
+  /* 350px 고정 대신, 화면에 따라 유연하게 변하는 비율로 변경 */
+  grid-template-columns: minmax(250px, 350px) 1fr;
+  gap: 40px;
+  background: #141417;
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid #27272a;
+  width: 100%;
+  max-width: 1200px;
+  /* 전체 최대 너비 제한 */
+  margin: 0 auto;
+  box-sizing: border-box;
+  /* 패딩이 너비에 포함되도록 */
 }
 
+/* 2. 이미지 섹션 (부모 너비에 맞게) */
 .item-detail-img {
-  width: 300px;
-  height: 450px;
-  object-fit: cover;
-  border-radius: 12px;
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 16px;
+  position: sticky;
+  top: 100px;
+}
+
+/* Info Section */
+.item-detail-info h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
 }
 
 .item-detail-info {
-  flex: 1;
+  /* [매우 중요] 그리드 자식 요소가 내부 컨텐츠 크기 때문에 
+     부모를 뚫고 나가는 것을 막아주는 마법의 속성 */
+  min-width: 0;
 }
 
-.item-detail-info h1 {
-  font-size: 2rem;
-  margin-bottom: 8px;
-}
-
-.item-description {
-  margin: 16px 0;
-  line-height: 1.5;
-}
-
-.rating {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-}
-
-.ott-buttons {
+/* 평점 박스 디자인 */
+.rating-container {
   display: flex;
-  gap: 12px;
+  gap: 20px;
+  margin-bottom: 30px;
   flex-wrap: wrap;
-  margin-top: 8px;
 }
 
-.ott-btn {
+.rating-box {
+  background: #1c1c21;
+  padding: 12px 20px;
+  border-radius: 12px;
+  border: 1px solid #27272a;
+}
+
+.rating-box small {
+  display: block;
+  color: #71717a;
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+}
+
+.stars {
   display: flex;
   align-items: center;
-  padding: 6px 12px;
-  border-radius: 8px;
-  color: #fff;
-  font-weight: 600;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-  text-decoration: none;
-  transition: transform 0.2s;
-  background-color: rgba(229, 9, 20, 0.8);
-  /* 조금 투명하게 */
+  gap: 5px;
+  font-size: 1.1rem;
 }
 
-.ott-btn img {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  background: #fff;
-  border-radius: 4px;
-  padding: 2px;
+.star.active {
+  color: #fbbf24;
 }
 
-.ott-btn:hover {
-  transform: scale(1.05);
+.star {
+  color: #3f3f46;
 }
 
-/* =========================
-   리뷰 섹션
-========================= */
-.reviews-section {
-  margin-top: 32px;
-  background-color: #1e293b;
-  padding: 24px;
-  border-radius: 14px;
+.rating-box.my-rating {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.1);
 }
 
-.reviews-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
-  color: #f0f0f0;
-}
-
-.reviews-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px 0;
-}
-
-.reviews-list li {
-  padding: 12px 16px;
-  margin-bottom: 12px;
-  background-color: #0f172a;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.reviews-list li.my-review {
-  background-color: #38bdf8;
-  color: #0f172a;
-  font-weight: 600;
-}
-
-.review-user {
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.review-comment {
-  margin-bottom: 4px;
-}
-
-.review-rating {
-  color: #facc15;
-  /* 별 색 */
-  font-weight: 600;
-}
-
-/* =========================
-   리뷰 작성 폼
-========================= */
-.review-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* ===============================
-   리뷰 섹션 – 별점
-================================ */
-.review-form label {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.star-rating {
-  display: flex;
-  gap: 6px;
-  font-size: 1.5rem;
-  margin-top: 4px;
-}
-
-.star-rating span {
-  cursor: pointer;
-  color: #555;
-  /* 비활성 별 */
-  transition: color 0.2s, transform 0.2s;
-}
-
-.star-rating span:hover,
-.star-rating span.active {
-  color: #facc15;
-  /* 활성 별 – 노란색 */
-  transform: scale(1.2);
-}
-
-.review-form input,
-.review-form textarea,
-.review-form select {
-  margin-top: 4px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1rem;
-}
-
-.review-form button {
-  align-self: flex-start;
-  padding: 8px 16px;
-  background-color: #38bdf8;
-  color: #0f172a;
-  font-weight: 600;
-  border-radius: 999px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease;
-}
-
-.review-form button:hover {
-  transform: scale(1.05);
-}
-
-/* =========================
-   별점 시각화
-========================= */
-.stars {
-  color: #facc15;
-  font-size: 1rem;
-  margin-right: 6px;
-}
-
+/* 추천 이유 */
 .recommend-reason-box {
-  margin: 12px 0 18px;
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 4px solid #a78bfa;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  border-left: 4px solid #6366f1;
 }
 
-.recommend-reason-box .reason-badge {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 999px;
-  margin-bottom: 6px;
-  color: #fff;
+.recommend-reason-box strong {
+  color: #818cf8;
+  display: block;
+  margin-bottom: 5px;
 }
 
-.reason-badge.PREFERRED_GENRE {
-  background: #a78bfa;
-}
-
-.reason-badge.RECENT_ACTIVITY {
-  background: #60a5fa;
-}
-
-.reason-badge.HIGH_RATING {
-  background: #fbbf24;
-  color: #000;
-}
-
-.reason-badge.POPULAR {
-  background: #9ca3af;
-}
-
-.reason-message {
-  font-size: 13px;
-  color: #e5e7eb;
-  margin-top: 4px;
-}
-
-/* 인물 카드 레이아웃 */
+/* 인물 카드 섹션 */
 .person-list-section {
-  margin: 15px 0;
+  width: 100%;
+  overflow: hidden;
+  /* 영역 밖 탈출 방지 */
 }
 
 .person-cards {
   display: flex;
   gap: 15px;
-  margin-top: 8px;
+  margin-top: 15px;
+}
+
+.person-cards.scrollable {
+  display: flex;
+  gap: 15px;
   overflow-x: auto;
-  /* 배우가 많으면 옆으로 스크롤 */
+  /* 내용이 많으면 가로 스크롤 생성 */
+  white-space: nowrap;
+  /* 아이템들이 아래로 떨어지지 않게 함 */
   padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+  /* 모바일 부드러운 스크롤 */
+  width: 100%;
 }
 
 .person-card {
-  flex: 0 0 70px;
-  /* 고정 너비 */
+  flex: 0 0 80px;
   text-align: center;
 }
 
@@ -272,230 +159,439 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  /* 동그란 프로필 */
   object-fit: cover;
-  border: 2px solid #ddd;
+  margin-bottom: 8px;
+  border: 2px solid #27272a;
 }
 
 .person-card span {
   display: block;
   font-size: 0.75rem;
-  margin-top: 5px;
-  color: #555;
+  color: #a1a1aa;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* 시즌 카드 레이아웃 */
-.seasons-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.season-card {
-  display: flex;
-  background: #f9f9f9;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 120px;
-  border: 1px solid #eee;
-}
-
-.season-card img {
-  width: 80px;
-  object-fit: cover;
-}
-
-.season-info {
-  padding: 10px;
-  flex: 1;
-}
-
-.season-overview {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 5px;
-}
-
-/* ... 기존 상단 코드는 유지 ... */
-
-.item-detail-card {
-  display: flex;
-  gap: 32px;
-  background-color: #1e293b;
-  padding: 24px;
-  border-radius: 14px;
-  /* 내부 요소들이 넘치지 않도록 방어 */
-  overflow: hidden;
-}
-
-/* 인물 카드 레이아웃 수정 */
-.person-list-section {
-  margin: 20px 0;
-}
-
-.person-cards {
-  display: flex;
-  gap: 16px;
-  margin-top: 10px;
-  overflow-x: auto;
-  padding-bottom: 12px;
-  /* 가로 스크롤바 커스텀 (세련되게) */
-  scrollbar-width: thin;
-  scrollbar-color: #38bdf8 #1e293b;
-}
-
-/* 크롬, 사파리용 스크롤바 */
-.person-cards::-webkit-scrollbar {
-  height: 6px;
-}
-
-.person-cards::-webkit-scrollbar-thumb {
-  background: #38bdf8;
-  border-radius: 10px;
-}
-
-.person-card {
-  flex: 0 0 80px;
-  /* 조금 더 넓게 */
-  text-align: center;
-}
-
-.person-card img {
-  width: 70px;
-  /* 크기 약간 키움 */
-  height: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #334155;
-  /* 다크모드에 맞는 테두리 */
-  background-color: #0f172a;
-}
-
-.person-card span {
-  display: block;
-  font-size: 0.8rem;
-  margin-top: 8px;
-  color: #cbd5e1;
-  /* 글자색 밝게 */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* 시즌 카드 레이아웃 수정 (다크모드 통일) */
-.seasons-section {
-  margin-top: 24px;
-}
-
+/* 시즌 정보 */
 .seasons-container {
   display: grid;
-  /* 리스트 대신 그리드 추천 */
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
-  margin-top: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
 }
 
 .season-card {
   display: flex;
-  background: #0f172a;
-  /* 배경 어둡게 통일 */
+  gap: 15px;
+  background: #1c1c21;
+  padding: 12px;
   border-radius: 12px;
-  overflow: hidden;
-  min-height: 140px;
-  border: 1px solid #334155;
 }
 
 .season-card img {
-  width: 100px;
+  width: 70px;
+  height: 100px;
+  border-radius: 8px;
   object-fit: cover;
-}
-
-.season-info {
-  padding: 14px;
-  flex: 1;
-  overflow: hidden;
 }
 
 .season-info h4 {
-  margin: 0 0 4px 0;
-  color: #f8fafc;
-}
-
-.season-info small {
-  color: #38bdf8;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
 }
 
 .season-overview {
-  font-size: 0.85rem;
-  color: #94a3b8;
+  font-size: 0.8rem;
+  color: #71717a;
+  line-height: 1.4;
+}
+
+/* OTT 버튼 */
+.ott-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.ott-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.ott-btn img {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.ott-btn:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.2);
+}
+
+/* Reviews Section */
+.reviews-section {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 0 20px;
+}
+
+.reviews-section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Review Form - 리뷰 작성창 */
+.review-form {
+  background: #18181b;
+  padding: 32px;
+  border-radius: 20px;
+  margin-bottom: 60px;
+  border: 1px solid #27272a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.review-form h3 {
+  font-size: 1.3rem;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.review-form label {
+  display: block;
+  margin-bottom: 20px;
+  color: #a1a1aa;
+  font-size: 0.95rem;
+}
+
+/* 별점 컴포넌트 커스텀 */
+.star-rating {
+  display: flex;
+  gap: 8px;
   margin-top: 8px;
-  /* 여러 줄 말줄임 처리 (3줄까지) */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font-size: 1.8rem;
 }
 
-/* =========================
-   반응형 (Media Queries)
-========================= */
-@media (max-width: 1024px) {
-  .item-detail-img {
-    width: 240px;
-    height: 360px;
-  }
+.star-rating span {
+  cursor: pointer;
+  color: #3f3f46;
+  transition: 0.2s;
 }
 
+.star-rating span.active,
+.star-rating span:hover {
+  color: #fbbf24;
+  transform: scale(1.1);
+}
+
+/* 입력창 스타일 */
+.review-form input {
+  width: 100%;
+  padding: 14px 18px;
+  background: #0d0d0f;
+  border: 1px solid #27272a;
+  box-sizing: border-box;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 8px;
+  transition: 0.3s;
+}
+
+.review-form input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.review-form button[type="submit"] {
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  /* 모바일 대응을 위해 전체 너비 */
+  margin-top: 10px;
+}
+
+.review-form button[type="submit"]:hover {
+  background: #4f46e5;
+  transform: translateY(-2px);
+}
+
+/* Reviews List - 리뷰 리스트 */
+.reviews-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reviews-list li {
+  background: #141417;
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid #27272a;
+  transition: 0.3s;
+  position: relative;
+}
+
+.reviews-list li:hover {
+  border-color: #3f3f46;
+}
+
+/* 내 리뷰 강조 스타일 */
+.reviews-list li.my-review {
+  border: 1px solid #4f46e5;
+  background: rgba(79, 70, 229, 0.05);
+}
+
+.reviews-list li.my-review::after {
+  content: "내 리뷰";
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #818cf8;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.reviews-list li strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.reviews-list li .rating-text {
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.reviews-list li p {
+  color: #d1d1d6;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.login-prompt-box {
+  background: #1c1c21;
+  padding: 15px;
+  border-radius: 12px;
+  border: 1px dashed #3f3f46;
+  color: #a1a1aa;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* 반응형 */
 @media (max-width: 768px) {
-  .item-detail-page {
-    padding: 20px;
+  .review-form {
+    padding: 24px;
   }
 
+  .review-form button[type="submit"] {
+    width: 100%;
+  }
+}
+
+/* 컨테이너 */
+.action-buttons-wrapper {
+  margin-top: 25px;
+}
+
+/* 버튼들을 왼쪽으로 정렬 (전체 너비 차지 X) */
+.action-group {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  /* 왼쪽 정렬 */
+}
+
+/* 🚀 공통 버튼 초기화 (회색 박멸) */
+.action-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  height: 44px;
+  /* 높이도 살짝 줄여서 더 날렵하게 */
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* 🤍 찜하기 버튼 (컴팩트하게) */
+.action-btn.outline,
+.action-btn.active {
+  width: 44px;
+  min-width: 44px;
+  background-color: #27272a !important;
+  border: 1px solid #3f3f46 !important;
+  color: #fff !important;
+  padding: 0;
+}
+
+/* ❤️ 찜 활성화 */
+.action-btn.active {
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+}
+
+/* 🔥 시청 완료 버튼 (너비 축소!) */
+.action-btn.primary {
+  width: 140px;
+  /* 너무 크지 않게 적당한 너비 고정 */
+  background-color: #ffffff !important;
+  /* 쌩흰색 */
+  color: #000000 !important;
+  font-size: 0.9rem;
+  padding: 0 15px;
+}
+
+/* ✍️ 리뷰 쓰기 모드일 때 (파란색 포인트) */
+.action-btn.primary.review-mode {
+  background-color: #6366f1 !important;
+  color: #ffffff !important;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.9);
+}
+
+/* 완료 배지 */
+.status-finished-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background-color: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10b981;
+  color: #10b981;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+/* ==========================================
+   ItemDetail Responsive (반응형 추가)
+   ========================================== */
+
+/* 1. 맥북 반분할 및 태블릿 (1100px 이하부터 미리 전환) */
+@media (max-width: 1100px) {
   .item-detail-card {
-    flex-direction: column;
-    align-items: center;
-    padding: 16px;
+    /* 좌우 배치를 포기하고 상하로 쌓아서 여유 공간 확보 */
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 30px;
+    text-align: center;
+    /* 중앙 정렬로 안정감 부여 */
   }
 
   .item-detail-img {
-    width: 200px;
-    /* 모바일에서는 좀 더 작게 */
-    height: 300px;
-  }
-
-  .item-detail-info {
-    width: 100%;
-    text-align: center;
+    position: static;
+    /* sticky 해제해서 박스 탈출 방지 */
+    width: 250px;
+    margin: 0 auto;
   }
 
   .item-detail-info h1 {
-    font-size: 1.6rem;
+    font-size: 2.2rem;
+    text-align: center;
   }
 
-  .rating-container {
+  /* 컨텐츠 정렬 중앙화 */
+  .rating-container,
+  .action-group,
+  .ott-buttons,
+  .person-cards {
+    justify-content: center;
+  }
+}
+
+/* 2. 모바일 구간 (768px 이하) */
+@media (max-width: 768px) {
+  .item-detail-page {
+    padding: 80px 15px 40px;
+  }
+
+  .item-detail-card {
+    padding: 20px;
+    /* 삐져나감 방지를 위해 그리드 해제 */
+    display: block;
+  }
+
+  .item-detail-info h1 {
+    font-size: 1.8rem;
+    word-break: keep-all;
+  }
+
+  /* 버튼 튀어나감 완전 봉쇄 */
+  .action-group {
+    display: flex;
+    width: 100%;
+    gap: 10px;
     justify-content: center;
   }
 
-  .person-cards {
-    justify-content: flex-start;
-    /* 모바일은 왼쪽부터 스크롤 */
+  .action-btn.primary {
+    flex: 1;
+    /* 가로 가득 채우기 */
+    width: auto !important;
+    max-width: 300px;
+  }
+
+  .action-btn.outline,
+  .action-btn.active {
+    flex: 0 0 48px;
+    /* 찜버튼 크기 고정 */
+  }
+
+  /* 시즌/OTT 카드 1열 고정 */
+  .ott-buttons {
+    flex-direction: column;
   }
 
   .seasons-container {
     grid-template-columns: 1fr;
-    /* 모바일은 한 줄씩 */
+  }
+}
+
+/* 3. 아주 작은 화면 (480px 이하) */
+@media (max-width: 480px) {
+  .item-detail-info h1 {
+    font-size: 1.5rem;
   }
 
-  .ott-buttons {
-    justify-content: center;
-  }
-
-  .recommend-reason-box {
-    text-align: left;
-    /* 이유 설명은 왼쪽 정렬이 읽기 편함 */
+  .rating-box {
+    width: 100%;
   }
 }

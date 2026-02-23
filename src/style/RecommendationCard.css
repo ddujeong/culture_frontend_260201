@@ -1,0 +1,126 @@
+/* RecommendationCard.css */
+
+.feature-card {
+    background: #18181b;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #27272a;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.feature-card:hover {
+    border-color: #3f3f46;
+    background: #202023;
+}
+
+/* 이미지 영역 비율 유지 */
+.card-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    flex-shrink: 0;
+    /* 이미지가 찌그러지지 않게 고정 */
+}
+
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* 텍스트 영역 */
+.card-content {
+    padding: 16px;
+    flex: 1;
+    /* 남은 공간을 채움 */
+    display: flex;
+    flex-direction: column;
+    /* 제목과 이유 섹션 사이에 최소 간격을 둠 */
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.feature-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.4;
+    margin: 0;
+
+    /* 1. 제목이 짧아도 일정한 높이를 차지하게 해서 '이유' 섹션과 안 겹치게 함 */
+    /* min-height: em; */
+
+    /* 2. 제목 두 줄 제한 */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 추천 이유 영역 (항상 카드의 바닥에 붙음) */
+.card-reason {
+    margin-top: auto;
+    /* 제목이 짧을 때 바닥으로 밀어내기 */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid #27272a;
+    /* 구분선을 주면 확실히 안 겹쳐 보임 */
+}
+
+.reason-badge {
+    display: inline-block;
+    width: fit-content;
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.reason-text {
+    font-size: 0.8rem;
+    color: #a1a1aa;
+    line-height: 1.5;
+    margin: 0;
+    /* 이유 메시지도 최대 2줄로 제한 (겹침 방지 끝판왕) */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 뱃지들 (이미지 위에 absolute) */
+.card-score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fbbf24;
+    z-index: 2;
+}
+
+.card-category-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #fff;
+    z-index: 2;
+}

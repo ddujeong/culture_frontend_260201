@@ -1,111 +1,259 @@
-/* ===============================
-   Preferences Item Cards
-================================ */
-.category-card {
-  background-color: var(--bg-card);
-  padding: 24px;
-  border-radius: 14px;
-  min-width: 280px;
-  max-width: 320px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+/* 전체 컨테이너 */
+.preferences-page {
+  padding: 140px 8% 100px;
+  /* 상단 헤더 공간 충분히 확보 */
+  background-color: #0a0a0b;
+  color: #fff;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.category-card h2 {
-  margin-bottom: 16px;
-  font-size: 1.2rem;
+/* 상단 타이틀 및 설명 */
+.preferences-page h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  letter-spacing: -1.5px;
+  background: linear-gradient(to right, #fff, #71717a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: center;
 }
 
-/* 아이템 카드 그리드 */
-.items-grid {
+.preferences-page>p {
+  font-size: 1.2rem;
+  color: #a1a1aa;
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+/* 카테고리 전체 감싸는 영역 */
+.categories-container {
+  width: 100%;
+  max-width: 1200px;
   display: flex;
+  flex-direction: column;
+  gap: 80px;
+  /* 카테고리 간의 여백을 넉넉히 */
+}
+
+/* 개별 카테고리 섹션 */
+.category-section {
+  width: 100%;
+}
+
+.category-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #fff;
+  display: flex;
+  align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+}
+
+.category-title::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 24px;
+  background: #6366f1;
+  /* 포인트 컬러 */
+  border-radius: 4px;
+}
+
+/* 아이템 그리드 레이아웃 */
+.items-grid {
+  display: grid;
+  /* 카드 최소 너비를 180px -> 140px로 줄여서 한 줄에 더 많이 나오게 */
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
+  /* 간격도 살짝 조절 */
+}
+
+.item-title {
+  font-size: 0.85rem;
+  /* 폰트도 살짝 작게 */
+}
+
+/* 개별 아이템 카드 */
+.pref-item-card {
+  background: #141417;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #27272a;
+  position: relative;
+}
+
+.pref-item-card:hover {
+  transform: translateY(-8px);
+  border-color: #3f3f46;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* 선택되었을 때 스타일 */
+.pref-item-card.selected {
+  border-color: #6366f1;
+  background: rgba(99, 102, 241, 0.05);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+}
+
+/* 이미지 컨테이너 */
+.img-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  /* 포스터 비율 유지 */
+  overflow: hidden;
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.pref-item-card:hover .img-wrapper img {
+  transform: scale(1.05);
+}
+
+/* 선택 시 나타나는 체크 표시 */
+.check-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(99, 102, 241, 0.7);
+  /* 보라색 투명 오버레이 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #fff;
+  backdrop-filter: blur(2px);
+  animation: scaleIn 0.2s ease-out;
+}
+
+/* 아이템 텍스트 정보 */
+.item-info {
+  padding: 15px;
+}
+
+.item-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-genre {
+  font-size: 0.85rem;
+  color: #71717a;
+}
+
+/* 하단 제출 버튼 영역 (플로팅) */
+.footer-action {
+  position: sticky;
+  bottom: 40px;
+  margin-top: 80px;
+  z-index: 100;
+  width: 100%;
+  display: flex;
   justify-content: center;
 }
 
-/* 단일 아이템 카드 */
-.item-card {
-  width: 120px;
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.25s ease;
-  text-align: center;
-  background-color: var(--bg-main);
-}
-
-.item-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-}
-
-.item-card-title {
-  font-size: 0.9rem;
-  margin-top: 6px;
-  color: var(--text-main);
-}
-
-.item-card-genre {
-  font-size: 0.75rem;
-  color: var(--text-sub);
-}
-
-/* 선택된 카드 */
-.item-card.selected {
-  border-color: var(--point);
-  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
-}
-
-/* Hover 효과 */
-.item-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.25);
-}
-
-/* ===============================
-   Submit Button
-================================ */
 .submit-btn {
-  margin-top: 40px;
-  padding: 14px 36px;
-  border-radius: 999px;
-  background-color: var(--point);
-  color: #0F172A;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
+  background: #6366f1;
+  color: #fff;
   border: none;
+  padding: 18px 60px;
+  border-radius: 100px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 15px 35px rgba(99, 102, 241, 0.4);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+  background: #4f46e5;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(99, 102, 241, 0.5);
 }
 
-/* ===============================
-   Responsive
-================================ */
-@media (max-width: 768px) {
-  .category-card {
-    min-width: 220px;
-    padding: 20px;
+.submit-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* 애니메이션 */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(1.2);
   }
 
-  .item-card {
-    width: 100px;
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 반응형 모바일 대응 */
+@media (max-width: 1024px) {
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .preferences-page {
+    padding: 100px 5% 60px;
   }
 
   .preferences-page h1 {
     font-size: 2rem;
   }
 
-  .preferences-page p {
-    font-size: 1rem;
+  .categories-container {
+    gap: 50px;
   }
+
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+  }
+
+  .item-info {
+    padding: 10px;
+  }
+
+  .item-title {
+    font-size: 0.9rem;
+  }
+
+  .submit-btn {
+    width: 90%;
+    padding: 15px;
+    font-size: 1.1rem;
+  }
+}
+
+/* 로딩 박스 스타일 */
+.loading-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #71717a;
+  font-size: 1.2rem;
 }

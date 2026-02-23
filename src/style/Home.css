@@ -1,275 +1,280 @@
-/* ===============================
-   Color System – Option A
-================================ */
-:root {
-  --bg-main: #0F172A;
-  /* 딥 네이비 */
-  --bg-card: #1E293B;
-  /* 카드 배경 */
-  --text-main: #E5E7EB;
-  /* 메인 텍스트 */
-  --text-sub: #94A3B8;
-  /* 서브 텍스트 */
-  --point: #38BDF8;
-  /* 포인트 하늘색 */
+/* Home.css - Premium Dark Theme & Responsive */
+
+/* 01. Base Style */
+.home-simple {
+  background-color: #0d0d0f;
+  /* 깊이감 있는 다크 그레이 */
+  color: #e4e4e7;
+  word-break: keep-all;
+  overflow-x: hidden;
 }
 
-/* ===============================
-   Global
-================================ */
-body {
-  margin: 0;
-  font-family: 'Pretendard', 'Roboto', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', sans-serif;
-  background-color: var(--bg-main);
-  color: var(--text-main);
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* ===============================
-   Hero Section
-================================ */
-.hero {
-  height: 75vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 60px;
-  background: linear-gradient(180deg,
-      rgba(15, 23, 42, 1) 0%,
-      rgba(15, 23, 42, 0.85) 60%,
-      rgba(15, 23, 42, 1) 100%);
-}
-
-.hero h1 {
-  font-size: 3.2rem;
-  font-weight: 700;
-  margin-bottom: 16px;
-}
-
-.hero p {
-  font-size: 1.15rem;
-  color: var(--text-sub);
-  max-width: 520px;
-  line-height: 1.6;
-  margin-bottom: 32px;
-}
-
-/* Hero Buttons */
-.hero a {
-  display: inline-block;
-  padding: 14px 36px;
-  margin-right: 12px;
-  border-radius: 999px;
-  background-color: var(--point);
-  color: #0F172A;
-  font-weight: 600;
-  transition: all 0.25s ease;
-}
-
-.hero a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
-}
-
-/* ===============================
-   Feature Cards Section
-================================ */
-.features {
-  padding: 40px 40px 60px;
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-}
-
-.features::-webkit-scrollbar {
-  display: none;
-}
-
-/* Card */
-.feature-card {
-  min-width: 220px;
-  height: 320px;
-  background-color: var(--bg-card);
-  border-radius: 14px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-}
-
-.feature-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.9;
-}
-
-/* Card Title */
-.feature-card-title {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
-}
-
-/* ===============================
-   CTA Section
-================================ */
-.cta {
-  padding: 80px 20px;
+/* 02. Hero Section - 상단 은은한 광원 효과 */
+.simple-hero {
+  padding: 160px 20px 100px;
   text-align: center;
+  background: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0d0d0f 70%);
 }
 
-.cta h2 {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
+.simple-hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  color: #ffffff;
 }
 
-.cta p {
-  color: var(--text-sub);
-  margin-bottom: 32px;
+.simple-hero p {
+  font-size: 1.2rem;
+  color: #a1a1aa;
+  margin-bottom: 40px;
 }
 
-.cta a {
-  padding: 14px 36px;
-  border-radius: 999px;
-  background-color: var(--point);
-  color: #0F172A;
-  font-weight: 600;
-  transition: all 0.25s ease;
+.main-btn {
+  display: inline-block;
+  background: #ffffff;
+  color: #000000;
+  padding: 18px 48px;
+  border-radius: 40px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.cta a:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.35);
+.main-btn.shadow:hover {
+  transform: translateY(-4px);
+  background: #f4f4f5;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
 
-/* 섹션 전체 레이아웃 */
-.home-section {
-  padding: 40px 60px;
-  /* Hero와 좌우 정렬 맞춤 */
+/* 03. Section Common */
+.simple-section {
+  padding: 100px 0;
 }
 
-.section-info {
+.section-head {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 20px;
+  margin-bottom: 32px;
 }
 
-.section-info h2 {
-  font-size: 1.8rem;
+.section-head h2 {
+  font-size: 1.5rem;
   font-weight: 700;
-  margin: 0;
+  color: #ffffff;
 }
 
-.view-all {
-  color: var(--point);
-  font-size: 0.95rem;
+.more-link {
+  color: #71717a;
+  font-size: 0.9rem;
   font-weight: 500;
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-/* 그리드/플렉스 컨테이너 */
-.content-grid {
-  display: grid;
-  /* 한 줄에 4~5개씩 배치 */
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 24px;
+.more-link:hover {
+  color: #ffffff;
+  border-bottom: 1px solid #ffffff;
 }
 
-/* 개별 카드 (기존 .feature-card 기반으로 확장) */
-.item-card {
-  background-color: var(--bg-card);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+/* 04. Horizontal List & Cards */
+.horizontal-list {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.horizontal-list::-webkit-scrollbar {
+  display: none;
+}
+
+.simple-card {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
   cursor: pointer;
 }
 
-.item-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-}
-
-.item-card img {
+.img-box {
   width: 100%;
   aspect-ratio: 2/3;
-  /* 영화/책 포스터 비율 */
-  object-fit: cover;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  background: #18181b;
+  margin-bottom: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* 1. 음악 섹션 전용 그리드 (더 작게 배치) */
-.music-grid {
-  display: grid;
-  /* minmax를 150px 정도로 줄여서 한 줄에 더 많이 나오게 설정 */
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-}
-
-/* 2. 음악 카드 이미지 (정사각형 1:1) */
-.music-card img {
+.img-box img {
   width: 100%;
-  aspect-ratio: 1 / 1 !important;
-  /* 강제로 정사각형 유지 */
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
-  /* 음악은 둥글둥글한 게 예뻐요 */
+  transition: transform 0.5s ease;
 }
 
-/* 3. 텍스트 정보 정렬 */
-.item-details h4 {
-  margin-top: 8px;
+.simple-card:hover img {
+  transform: scale(1.08);
+}
+
+.rank-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.rank-badge.new {
+  background: #6366f1;
+}
+
+.rank-badge.hot {
+  background: #ef4444;
+}
+
+.info-box h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+
+.info-box span {
+  color: #71717a;
   font-size: 0.9rem;
-  /* 음악 제목은 살짝 작게 */
+}
+
+/* 05. Split View (Bottom) */
+.gray-bg {
+  background: #09090b;
+  /* 배경보다 살짝 더 어둡게 구분 */
+}
+
+.split-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.row-item,
+.music-slim-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 16px;
+  background: #18181b;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+  border: 1px solid #27272a;
+}
+
+.row-item:hover,
+.music-slim-item:hover {
+  background: #27272a;
+  border-color: #3f3f46;
+  transform: translateX(8px);
+}
+
+.row-img-book {
+  width: 54px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.slim-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.row-info h4,
+.slim-info h4 {
+  font-size: 1.05rem;
   font-weight: 600;
+  margin-bottom: 4px;
+  color: #ffffff;
 }
 
-.item-details p {
-  font-size: 0.8rem;
-  color: var(--point);
-  /* 아티스트 이름은 포인트 컬러로 */
+.row-info p,
+.slim-info p {
+  font-size: 0.85rem;
+  color: #a1a1aa;
 }
 
-/* ===============================
-   Responsive (Mobile)
-================================ */
-@media (max-width: 768px) {
-  .hero {
-    padding: 0 24px;
-    height: 65vh;
+.slim-play {
+  font-size: 0.7rem;
+  color: #3f3f46;
+}
+
+/* ==========================================
+   Responsive Design (반응형)
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 40px;
   }
 
-  .hero h1 {
+  .split-view {
+    gap: 30px;
+  }
+
+  .simple-hero h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .simple-hero {
+    padding: 100px 20px 60px;
+  }
+
+  .simple-hero h1 {
     font-size: 2.2rem;
   }
 
-  .hero p {
-    font-size: 1rem;
+  .simple-section {
+    padding: 60px 0;
   }
 
-  .features {
-    padding: 30px 20px;
-    gap: 14px;
+  .split-view {
+    grid-template-columns: 1fr;
+    gap: 50px;
   }
 
-  .feature-card {
-    min-width: 170px;
-    height: 250px;
+  .simple-card {
+    flex: 0 0 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .simple-hero h1 {
+    font-size: 1.8rem;
   }
 
-  .cta h2 {
-    font-size: 1.6rem;
+  .main-btn {
+    padding: 14px 32px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .simple-card {
+    flex: 0 0 150px;
+  }
+
+  .row-item,
+  .music-slim-item {
+    padding: 12px;
   }
 }

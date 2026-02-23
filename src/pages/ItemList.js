@@ -1,17 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/axiosConfig";
 import "../style/ItemList.css";
 
-// 🌟 카테고리 영문명을 한글로 보여주기 위한 매퍼
 const CATEGORY_LABELS = {
-    MOVIE: "영화",
-    DRAMA: "드라마",
-    TV_SHOW: "예능/TV",
-    ANIMATION: "애니메이션",
-    BOOK: "도서/웹툰",
-    MUSIC: "음악/앨범",
-    ALL: "전체보기"
+    MOVIE: "영화", DRAMA: "드라마", TV_SHOW: "예능/TV",
+    ANIMATION: "애니메이션", BOOK: "도서/웹툰", MUSIC: "음악/앨범", ALL: "전체보기"
 };
 
 const FILTER_CONFIG = {
@@ -35,20 +29,44 @@ const FILTER_CONFIG = {
 };
 
 export default function ItemList() {
-    const [filter, setFilter] = useState({ type: "ALL", category: "ALL", genre: "ALL" });
+    const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams(); // 🌟 선언 순서 중요 (아래 searchInput 초기값에서 사용)
+
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+
+    // 🌟 입력창 로컬 상태: 주소창의 'search' 값을 초기값으로 사용
+    const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
+
+    const filter = {
+        type: searchParams.get("type") || "ALL",
+        category: searchParams.get("category") || "ALL",
+        genre: searchParams.get("genre") || "ALL",
+        search: searchParams.get("search") || "",
+        sort: searchParams.get("sort") || "newest"
+    };
+
+    // 🌟 뒤로가기나 URL 직접 변경 시 입력창 동기화
+    useEffect(() => {
+        setSearchInput(searchParams.get("search") || "");
+    }, [searchParams]);
+
+    const updateFilter = (newParams) => {
+        const updated = {
+            type: filter.type,
+            category: filter.category,
+            genre: filter.genre,
+            search: filter.search,
+            sort: filter.sort,
+            ...newParams
+        };
+        // 🌟 replace: true를 사용해야 검색어 입력 시 히스토리가 과하게 쌓이지 않음
+        setSearchParams(updated, { replace: true });
+    };
 
     useEffect(() => {
         setLoading(true);
-        api.get(`/items`, {
-            params: {
-                type: filter.type,
-                category: filter.category,
-                genre: filter.genre
-            }
-        })
+        api.get(`/items`, { params: filter })
             .then((res) => {
                 setItems(res.data);
                 setLoading(false);
@@ -57,18 +75,21 @@ export default function ItemList() {
                 console.error(err);
                 setLoading(false);
             });
-    }, [filter]);
+    }, [searchParams]);
 
-    const handleTypeChange = (typeId) => {
-        setFilter({ type: typeId, category: "ALL", genre: "ALL" });
-    };
+    const handleTypeChange = (typeId) => updateFilter({ type: typeId, category: "ALL", genre: "ALL", search: "" });
+    const handleCategoryChange = (catId) => updateFilter({ category: catId, genre: "ALL", search: "" });
+    const handleGenreChange = (genreName) => updateFilter({ genre: genreName });
+    const handleSortChange = (e) => updateFilter({ sort: e.target.value });
 
-    const handleCategoryChange = (catId) => {
-        setFilter(prev => ({ ...prev, category: catId, genre: "ALL" }));
-    };
+    // 🌟 입력 처리 (URL은 아직 안 바뀜)
+    const handleSearchChange = (e) => setSearchInput(e.target.value);
 
-    const handleGenreChange = (genreName) => {
-        setFilter(prev => ({ ...prev, genre: genreName }));
+    // 🌟 제출 처리 (URL 업데이트 -> API 호출)
+    const handleSearchSubmit = (e) => {
+        if (e.key === 'Enter') {
+            updateFilter({ search: searchInput });
+        }
     };
 
     return (
@@ -76,8 +97,6 @@ export default function ItemList() {
             <aside className="item-list-sidebar">
                 <div className="sidebar-sticky">
                     <h2 className="sidebar-title">콘텐츠 탐색</h2>
-
-                    {/* 1단계: 유형(Type) */}
                     <div className="filter-group">
                         <p className="filter-label">유형</p>
                         <nav className="category-nav">
@@ -93,87 +112,94 @@ export default function ItemList() {
                         </nav>
                     </div>
 
-                    {/* 2단계: 카테고리(Category) */}
                     {filter.type !== "ALL" && (
-                        <>
+                        <div className="filter-group anime-fade-in">
                             <div className="sidebar-divider" />
-                            <div className="filter-group anime-fade-in">
-                                <p className="filter-label">세부 카테고리</p>
-                                <nav className="category-nav">
+                            <p className="filter-label">세부 카테고리</p>
+                            <nav className="category-nav">
+                                <button
+                                    className={`category-item sub ${filter.category === "ALL" ? "active" : ""}`}
+                                    onClick={() => handleCategoryChange("ALL")}
+                                >전체보기</button>
+                                {Object.keys(FILTER_CONFIG[filter.type].categories).map((catId) => (
                                     <button
-                                        className={`category-item sub ${filter.category === "ALL" ? "active" : ""}`}
-                                        onClick={() => handleCategoryChange("ALL")}
+                                        key={catId}
+                                        className={`category-item sub ${filter.category === catId ? "active" : ""}`}
+                                        onClick={() => handleCategoryChange(catId)}
                                     >
-                                        전체보기
+                                        {CATEGORY_LABELS[catId] || catId}
                                     </button>
-                                    {Object.keys(FILTER_CONFIG[filter.type].categories).map((catId) => (
-                                        <button
-                                            key={catId}
-                                            className={`category-item sub ${filter.category === catId ? "active" : ""}`}
-                                            onClick={() => handleCategoryChange(catId)}
-                                        >
-                                            {/* 🌟 매퍼를 사용하여 한글로 출력 */}
-                                            {CATEGORY_LABELS[catId] || catId}
-                                        </button>
-                                    ))}
-                                </nav>
-                            </div>
-                        </>
+                                ))}
+                            </nav>
+                        </div>
                     )}
 
-                    {/* 3단계: 장르(Genre) */}
                     {filter.category !== "ALL" && (
-                        <>
+                        <div className="filter-group anime-fade-in">
                             <div className="sidebar-divider" />
-                            <div className="filter-group anime-fade-in">
-                                <p className="filter-label">인기 장르</p>
-                                <div className="genre-tag-container">
+                            <p className="filter-label">인기 장르</p>
+                            <div className="genre-tag-container">
+                                <button
+                                    className={`genre-tag ${filter.genre === "ALL" ? "active" : ""}`}
+                                    onClick={() => handleGenreChange("ALL")}
+                                ># 전체</button>
+                                {FILTER_CONFIG[filter.type].categories[filter.category].map((g) => (
                                     <button
-                                        className={`genre-tag ${filter.genre === "ALL" ? "active" : ""}`}
-                                        onClick={() => handleGenreChange("ALL")}
-                                    >
-                                        # 전체
-                                    </button>
-                                    {FILTER_CONFIG[filter.type].categories[filter.category].map((g) => (
-                                        <button
-                                            key={g}
-                                            className={`genre-tag ${filter.genre === g ? "active" : ""}`}
-                                            onClick={() => handleGenreChange(g)}
-                                        >
-                                            # {g}
-                                        </button>
-                                    ))}
-                                </div>
+                                        key={g}
+                                        className={`genre-tag ${filter.genre === g ? "active" : ""}`}
+                                        onClick={() => handleGenreChange(g)}
+                                    ># {g}</button>
+                                ))}
                             </div>
-                        </>
+                        </div>
                     )}
                 </div>
             </aside>
 
             <main className="item-list-main">
                 <header className="list-header">
-                    <h1>
-                        {FILTER_CONFIG[filter.type].label}
-                        {filter.category !== "ALL" && ` > ${CATEGORY_LABELS[filter.category]}`}
-                        {filter.genre !== "ALL" && <span className="genre-title"> #{filter.genre}</span>}
-                    </h1>
-                    <span className="item-count">총 {items.length}개</span>
+                    <div className="header-left">
+                        <h1>
+                            {FILTER_CONFIG[filter.type].label}
+                            {filter.category !== "ALL" && ` > ${CATEGORY_LABELS[filter.category]}`}
+                        </h1>
+                        <span className="item-count">총 {items.length}개</span>
+                    </div>
+
+                    <div className="header-right">
+                        <div className="search-bar">
+                            <input
+                                type="text"
+                                placeholder="제목 검색 후 Enter..."
+                                value={searchInput} // 🌟 filter.search 대신 searchInput 연결
+                                onChange={handleSearchChange}
+                                onKeyDown={handleSearchSubmit}
+                            />
+                            <span className="search-icon" onClick={() => updateFilter({ search: searchInput })}>🔍</span>
+                        </div>
+                        <select className="sort-select" value={filter.sort} onChange={handleSortChange}>
+                            <option value="newest">최신등록순</option>
+                            <option value="rating">별점높은순</option>
+                            <option value="oldest">오래된순</option>
+                        </select>
+                    </div>
                 </header>
 
-                {loading ? (
-                    <div className="loading-state">
-                        <div className="spinner"></div>
-                        <p>데이터를 불러오는 중...</p>
+                {filter.genre !== "ALL" && (
+                    <div className="active-genre-info anime-fade-in">
+                        선택된 장르: <strong>#{filter.genre}</strong>
                     </div>
+                )}
+
+                {loading ? (
+                    <div className="loading-state"><div className="spinner"></div><p>데이터를 불러오는 중...</p></div>
                 ) : (
                     <div className="items-grid">
                         {items.length > 0 ? items.map((item) => (
                             <div key={item.id} className="browse-card" onClick={() => navigate(`/items/${item.id}`)}>
                                 <div className="card-img-wrapper">
                                     <img src={item.img || "/default-poster.png"} alt={item.title} />
-                                    <div className="card-overlay">
-                                        <span className="view-detail">상세보기</span>
-                                    </div>
+                                    <div className="card-overlay"><span className="view-detail">상세보기</span></div>
                                 </div>
                                 <div className="card-body">
                                     <span className="card-genre">{item.genre}</span>
@@ -183,9 +209,7 @@ export default function ItemList() {
                         )) : (
                             <div className="no-data-container">
                                 <p>해당 조건에 맞는 콘텐츠가 없습니다. ✨</p>
-                                <button onClick={() => setFilter({ type: "ALL", category: "ALL", genre: "ALL" })} className="reset-filter-btn">
-                                    필터 초기화
-                                </button>
+                                <button onClick={() => setSearchParams({})} className="reset-filter-btn">필터 초기화</button>
                             </div>
                         )}
                     </div>
