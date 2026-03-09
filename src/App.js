@@ -13,6 +13,7 @@ import { UserProvider, useUser } from './context/UserContext';
 import ItemDetail from './pages/ItemDetails';
 import Header from './components/Header';
 import ItemList from './pages/ItemList';
+import ChatDrawer from './components/ChatDrawer';
 
 function App() {
   const { user } = useUser();
@@ -31,6 +32,7 @@ function App() {
         <Route path="/items/:id" element={<ItemDetail />} />
         <Route path="/list" element={<ItemList />} />
       </Routes>
+      <ChatDrawer />
     </>
   );
 }
