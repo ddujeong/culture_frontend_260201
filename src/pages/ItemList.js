@@ -5,7 +5,7 @@ import "../style/ItemList.css";
 
 const CATEGORY_LABELS = {
     MOVIE: "영화", DRAMA: "드라마", TV_SHOW: "예능/TV",
-    ANIMATION: "애니메이션", BOOK: "도서/웹툰", MUSIC: "음악/앨범", ALL: "전체보기"
+    ANIMATION: "애니메이션", BOOK: "도서/웹툰", ALL: "전체보기"
 };
 
 const FILTER_CONFIG = {
@@ -23,7 +23,6 @@ const FILTER_CONFIG = {
         label: "🎵 정적 콘텐츠",
         categories: {
             BOOK: ["판타지", "문학", "자기계발", "만화", "경제경영", "사회과학", "수필", "인문학", "유아", "외국어", "과학", "수험서", "SF", "역사"],
-            MUSIC: ["K-POP", "R&B", "POP", "BALLAD", "HIP-HOP", "ROCK", "EDM"]
         }
     }
 };

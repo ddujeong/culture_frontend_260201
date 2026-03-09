@@ -29,7 +29,7 @@ ChartJS.register(
   Legend
 );
 
-const categories = ["MOVIE", "DRAMA", "TV_SHOW", "ANIMATION", "BOOK", "MUSIC"];
+const categories = ["MOVIE", "DRAMA", "TV_SHOW", "ANIMATION", "BOOK"];
 
 const categoryLabels = {
   MOVIE: "영화",
@@ -37,7 +37,6 @@ const categoryLabels = {
   TV_SHOW: "예능",
   ANIMATION: "애니메이션",
   BOOK: "도서",
-  MUSIC: "음악"
 };
 const MyPage = () => {
   const { user } = useUser();

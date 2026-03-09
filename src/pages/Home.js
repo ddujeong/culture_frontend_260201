@@ -9,7 +9,6 @@ const Home = () => {
   const [entertainment, setentertainment] = useState([]);
   const [animations, setAnimations] = useState([]);
   const [books, setBooks] = useState([]);
-  const [music, setMusic] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const Home = () => {
         setAnimations(res.data.animation?.items || []);
         setentertainment(res.data.entertainment?.items || [])
         setBooks(res.data.book?.items || []);
-        setMusic(res.data.music?.items || []);
         console.log(res.data)
       })
       .catch(err => console.error("데이터 로딩 실패:", err));
@@ -34,7 +32,7 @@ const Home = () => {
         <div className="hero-content">
           <span className="trending-tag">New Perspective</span>
           <h1>당신의 기록, <br /> 하나의 취향이 되다.</h1>
-          <p>영화, 도서, 음악까지 당신만을 위한 큐레이션</p>
+          <p>영화, 드라마, 예능, 도서까지 당신만을 위한 큐레이션</p>
           <div className="hero-btns">
             <Link to="/login" className="main-btn shadow">지금 시작하기</Link>
           </div>
@@ -135,7 +133,7 @@ const Home = () => {
             </div>
           </div>
         </section>
-        {/* 04. Book & Music: 하단 정렬 */}
+        {/* 04. Book & : 하단 정렬 */}
         <section className="simple-section gray-bg">
           <div className="container split-view">
 
@@ -152,25 +150,6 @@ const Home = () => {
                       <h4>{item.title}</h4>
                       <p>{item.genre}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 음악 영역 (다시 1열 리스트로 하되, 훨씬 컴팩트하게) */}
-            <div className="list-group">
-              <div className="section-head mini">
-                <h2>🎧 인기 음악</h2>
-              </div>
-              <div className="music-slim-list">
-                {music.slice(0, 5).map(item => (
-                  <div key={item.id} className="music-slim-item" onClick={() => navigate(`/items/${item.itemId}`)}>
-                    <img src={item.img} alt={item.title} className="slim-thumb" />
-                    <div className="slim-info">
-                      <h4>{item.title.split(' - ')[0]}</h4>
-                      <p>{item.title.split(' - ')[1] || item.genre}</p>
-                    </div>
-                    <div className="slim-play">▶</div>
                   </div>
                 ))}
               </div>

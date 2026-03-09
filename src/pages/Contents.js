@@ -12,11 +12,6 @@ const Contents = () => {
     { img: "https://via.placeholder.com/240x360", title: "데미안", category: "BOOK" },
   ];
 
-  const musicList = [
-    { img: "https://via.placeholder.com/240x240", title: "Lauv - Paris", category: "MUSIC" },
-    { img: "https://via.placeholder.com/240x240", title: "IU - Love poem", category: "MUSIC" },
-  ];
-
   return (
     <main className="contents-page">
       <h1 className="contents-title">AI가 추천한 콘텐츠</h1>
@@ -39,14 +34,6 @@ const Contents = () => {
         </div>
       </section>
 
-      <section className="content-section">
-        <h2>MUSIC</h2>
-        <div className="content-row">
-          {musicList.map((item, idx) => (
-            <FeatureCard key={idx} {...item} />
-          ))}
-        </div>
-      </section>
     </main>
   );
 };

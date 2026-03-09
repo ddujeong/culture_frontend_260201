@@ -165,20 +165,8 @@
 }
 
 .row-item,
-.music-slim-item {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 16px;
-  background: #18181b;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  transition: all 0.2s ease;
-  border: 1px solid #27272a;
-}
 
-.row-item:hover,
-.music-slim-item:hover {
+.row-item:hover {
   background: #27272a;
   border-color: #3f3f46;
   transform: translateX(8px);
@@ -273,8 +261,7 @@
     flex: 0 0 150px;
   }
 
-  .row-item,
-  .music-slim-item {
+  .row-item {
     padding: 12px;
   }
 }

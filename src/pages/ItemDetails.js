@@ -43,7 +43,7 @@ export default function ItemDetail() {
         navigate(-1);
       });
   }, [id, navigate, user?.id]);
-
+  console.log(item)
   // 2️⃣ 사용자 액션 상태 fetch
   useEffect(() => {
     if (!user) return;
@@ -210,11 +210,11 @@ export default function ItemDetail() {
               </>
             )}
 
-            {/* 🎵 StaticContent (음악) 전용 정보 */}
+            {/* 🎵 StaticContent 전용 정보 */}
             {item.itemType === "STATIC" && (
               <>
-                <p><strong>아티스트:</strong> {item.creator || "정보 없음"}</p>
-                <p><strong>앨범명:</strong> {item.albumName || "정보 없음"}</p>
+                <p><strong>지은이:</strong> {item.creator || "정보 없음"}</p>
+                <p><strong>출판사:</strong> {item.publisher || "정보 없음"}</p>
               </>
             )}
           </div>

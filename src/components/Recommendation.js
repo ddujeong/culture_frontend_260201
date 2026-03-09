@@ -8,7 +8,6 @@ const categoryStyles = {
   ENTERTAINMENT: { color: "#f59e0b", icon: "🍱" },
   ANIMATION: { color: "#ec4899", icon: "🏮" },
   BOOK: { color: "#10b981", icon: "📚" },
-  MUSIC: { color: "#3b82f6", icon: "🎵" },
 };
 
 const RecommendationCard = ({ item, category }) => {

@@ -38,7 +38,28 @@ export default function ChatDrawer() {
             setLoading(false);
         }
     };
+    const handleWatched = async (itemId, itemTitle) => {
+        const confirmMsg = `"${itemTitle}" 이거 봤어! 다른 거 추천해줘.`;
 
+        // 1. 채팅창에 사용자가 말한 것처럼 표시
+        setChatLog((prev) => [...prev, { role: "user", text: confirmMsg }]);
+        setLoading(true);
+
+        try {
+            // 2. 서버로 요청 보낼 때 '본 아이템의 ID'를 명시적으로 같이 보냄 (중요!)
+            const res = await api.post(`/chat/ask?userId=${user.id}`, {
+                message: confirmMsg,
+                viewedItemId: itemId  // 👈 서버가 바로 알 수 있게 ID를 직접 넘김
+            });
+
+            const data = JSON.parse(res.data.answer);
+            setChatLog((prev) => [...prev, { role: "ai", text: data.message, items: data.items }]);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <>
             {/* 챗봇 열기 버튼 */}
@@ -55,17 +76,27 @@ export default function ChatDrawer() {
                             <div key={idx} className={`chat-bubble-container ${log.role}`}>
                                 <div className={`chat-bubble ${log.role}`}>                                    {log.text}
                                     {/* 💡 AI 추천 카드가 있다면 렌더링 */}
+                                    {/* ChatDrawer.js 수정 부분 */}
                                     {log.items && (
                                         <div className="chat-card-list">
                                             {log.items.map((item) => (
-                                                <div
-                                                    key={item.id}
-                                                    className="chat-item-card"
-                                                    onClick={() => navigate(`/items/${item.id}`)} // 👈 경로에 맞게 수정
-                                                >
-                                                    <div className="card-title">{item.title}</div>
-                                                    <div className="card-genre">{item.genre}</div>
-                                                    <div className="card-reason">{item.reason}</div>
+                                                <div key={item.id} className="chat-item-card">
+                                                    <div onClick={() => navigate(`/items/${item.id}`)}>
+                                                        <div className="card-title">{item.title}</div>
+                                                        <div className="card-genre">{item.genre}</div>
+                                                        <div className="card-reason">{item.reason}</div>
+                                                    </div>
+
+                                                    {/* 💡 '봤어요' 버튼 추가 */}
+                                                    <button
+                                                        className="watched-btn"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation(); // 카드 클릭(이동) 방지
+                                                            handleWatched(item.id, item.title);
+                                                        }}
+                                                    >
+                                                        ✅ 봤어요
+                                                    </button>
                                                 </div>
                                             ))}
                                         </div>

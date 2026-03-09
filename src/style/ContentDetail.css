@@ -35,11 +35,9 @@
 .detail-category.movie {
   background: #3b82f6;
 }
+
 .detail-category.book {
   background: #22c55e;
-}
-.detail-category.music {
-  background: #a855f7;
 }
 
 .detail-title {

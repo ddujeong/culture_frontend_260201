@@ -12,7 +12,6 @@ export default function UserHome() {
     entertainment: { items: [] },
     animation: { items: [] },
     book: { items: [] },
-    music: { items: [] },
   });
 
   useEffect(() => {
@@ -26,7 +25,6 @@ export default function UserHome() {
           entertainment: res.data.entertainment || { items: [] },
           animation: res.data.animation || { items: [] },
           book: res.data.book || { items: [] },
-          music: res.data.music || { items: [] },
         });
       })
       .catch((err) => console.error(err));
@@ -40,7 +38,6 @@ export default function UserHome() {
     { title: "예능", emoji: "🍱", key: "entertainment" },
     { title: "애니메이션", emoji: "🏮", key: "animation" },
     { title: "도서", emoji: "📚", key: "book" },
-    { title: "음악", emoji: "🎵", key: "music" },
   ];
 
   return (
