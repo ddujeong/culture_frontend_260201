@@ -229,7 +229,12 @@ export default function ItemDetail() {
                     <div className="season-info">
                       <h4>{s.name}</h4>
                       <p><small>{s.airDate?.slice(0, 4)} | {s.episodeCount}개 에피소드</small></p>
-                      <p className="season-overview">{s.overview?.slice(0, 80)}...</p>
+                      {s.overview ? (
+                        <p className="season-overview">{s.overview}</p>
+                      ) : (
+                        <p className="season-overview">설명 없음</p>
+                      )}
+
                     </div>
                   </div>
                 ))}

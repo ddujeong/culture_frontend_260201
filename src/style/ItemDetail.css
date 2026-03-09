@@ -175,18 +175,24 @@
 
 /* 시즌 정보 */
 .seasons-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
   gap: 20px;
   margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
 }
 
 .season-card {
   display: flex;
-  gap: 15px;
+  gap: 12px;
   background: #1c1c21;
   padding: 12px;
   border-radius: 12px;
+
+  width: 220px;
+  /* 카드 가로 길이 제한 */
+  flex-shrink: 0;
+  /* 줄어들지 않게 */
 }
 
 .season-card img {
@@ -205,6 +211,11 @@
   font-size: 0.8rem;
   color: #71717a;
   line-height: 1.4;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* OTT 버튼 */

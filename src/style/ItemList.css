@@ -296,6 +296,10 @@
     cursor: pointer;
 }
 
+.scroll-trigger {
+    height: 1px;
+}
+
 /* 6. 반응형 (맥북 반분할 및 모바일) */
 @media (max-width: 1024px) {
     .item-list-page {

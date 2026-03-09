@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import api from "../api/axiosConfig";
 import "../style/ItemList.css";
@@ -30,10 +30,13 @@ const FILTER_CONFIG = {
 export default function ItemList() {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams(); // 🌟 선언 순서 중요 (아래 searchInput 초기값에서 사용)
-
+    const [page, setPage] = useState(0);
+    const [size] = useState(20);
+    const [totalPages, setTotalPages] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const observerRef = useRef(null);
     // 🌟 입력창 로컬 상태: 주소창의 'search' 값을 초기값으로 사용
     const [searchInput, setSearchInput] = useState(searchParams.get("search") || "");
 
@@ -59,23 +62,63 @@ export default function ItemList() {
             sort: filter.sort,
             ...newParams
         };
+        setItems([]);       // 추가
+        setHasMore(true);   // 추가
         // 🌟 replace: true를 사용해야 검색어 입력 시 히스토리가 과하게 쌓이지 않음
         setSearchParams(updated, { replace: true });
     };
-
+    useEffect(() => {
+        setPage(0);
+    }, [searchParams]);
     useEffect(() => {
         setLoading(true);
-        api.get(`/items`, { params: filter })
+        api.get(`/items`, { params: { ...filter, page: page, size: size } })
             .then((res) => {
-                setItems(res.data);
+                const newItems = res.data.content;
+
+                setItems(prev => page === 0 ? newItems : [...prev, ...newItems]);
+
+                setTotalPages(res.data.totalPages);
+
+                if (res.data.last) {
+                    setHasMore(false);
+                }
+
                 setLoading(false);
             })
             .catch((err) => {
                 console.error(err);
                 setLoading(false);
             });
-    }, [searchParams]);
+    }, [searchParams, page]);
+    useEffect(() => {
 
+        const observer = new IntersectionObserver(
+            (entries) => {
+
+                const target = entries[0];
+
+                if (target.isIntersecting && hasMore && !loading) {
+                    setPage(prev => prev + 1);
+                }
+
+            },
+            {
+                rootMargin: "200px"
+            }
+        );
+
+        if (observerRef.current) {
+            observer.observe(observerRef.current);
+        }
+
+        return () => {
+            if (observerRef.current) {
+                observer.unobserve(observerRef.current);
+            }
+        };
+
+    }, [hasMore, loading]);
     const handleTypeChange = (typeId) => updateFilter({ type: typeId, category: "ALL", genre: "ALL", search: "" });
     const handleCategoryChange = (catId) => updateFilter({ category: catId, genre: "ALL", search: "" });
     const handleGenreChange = (genreName) => updateFilter({ genre: genreName });
@@ -162,7 +205,7 @@ export default function ItemList() {
                             {FILTER_CONFIG[filter.type].label}
                             {filter.category !== "ALL" && ` > ${CATEGORY_LABELS[filter.category]}`}
                         </h1>
-                        <span className="item-count">총 {items.length}개</span>
+                        <span className="item-count">총 {totalPages * size}개</span>
                     </div>
 
                     <div className="header-right">
@@ -190,29 +233,41 @@ export default function ItemList() {
                     </div>
                 )}
 
-                {loading ? (
-                    <div className="loading-state"><div className="spinner"></div><p>데이터를 불러오는 중...</p></div>
-                ) : (
-                    <div className="items-grid">
-                        {items.length > 0 ? items.map((item) => (
-                            <div key={item.id} className="browse-card" onClick={() => navigate(`/items/${item.id}`)}>
-                                <div className="card-img-wrapper">
-                                    <img src={item.img || "/default-poster.png"} alt={item.title} />
-                                    <div className="card-overlay"><span className="view-detail">상세보기</span></div>
-                                </div>
-                                <div className="card-body">
-                                    <span className="card-genre">{item.genre}</span>
-                                    <h4 className="card-title">{item.title}</h4>
+                <div className="items-grid">
+                    {items.length > 0 ? items.map((item) => (
+                        <div key={item.id} className="browse-card" onClick={() => navigate(`/items/${item.id}`)}>
+                            <div className="card-img-wrapper">
+                                <img src={item.img || "/default-poster.png"} alt={item.title} />
+                                <div className="card-overlay">
+                                    <span className="view-detail">상세보기</span>
                                 </div>
                             </div>
-                        )) : (
+                            <div className="card-body">
+                                <span className="card-genre">{item.genre}</span>
+                                <h4 className="card-title">{item.title}</h4>
+                            </div>
+                        </div>
+                    )) : (
+                        !loading && (
                             <div className="no-data-container">
                                 <p>해당 조건에 맞는 콘텐츠가 없습니다. ✨</p>
-                                <button onClick={() => setSearchParams({})} className="reset-filter-btn">필터 초기화</button>
+                                <button onClick={() => setSearchParams({})} className="reset-filter-btn">
+                                    필터 초기화
+                                </button>
                             </div>
-                        )}
+                        )
+                    )}
+                </div>
+
+                {loading && (
+                    <div className="loading-state">
+                        <div className="spinner"></div>
+                        <p>데이터를 불러오는 중...</p>
                     </div>
                 )}
+
+                <div ref={observerRef} className="scroll-trigger"></div>
+
             </main>
         </div>
     );
